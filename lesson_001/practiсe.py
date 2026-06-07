@@ -13,7 +13,7 @@ def print_python():
 print_python()
 
 def print_letter(let):
-    print(let)
+    print(let, end="")
 print_letter('S')
 print_letter('k')
 print_letter('y')
