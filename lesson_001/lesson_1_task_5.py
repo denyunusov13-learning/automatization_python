@@ -1,6 +1,7 @@
 def print_tel(num):
     print(num, end="")
 
+
 print_tel(8)
 print_tel(8)
 print_tel(0)
