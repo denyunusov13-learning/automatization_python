@@ -1,3 +1,4 @@
+
 def print_tel(num):
     print(num, end="")
 
