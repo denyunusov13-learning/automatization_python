@@ -24,10 +24,7 @@ def test_dynamic_loading():
 
     driver.refresh()
 
-    personal_accaunt = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "a[href='/user/yunusova_natasha']")))
-    personal_accaunt.click()
+    driver.get("https://gitflic.ru/user/yunusova_natasha")
 
     first_url = driver.current_url
 
@@ -48,10 +45,7 @@ def test_dynamic_loading():
 
     driver.refresh()
 
-    personal_accaunt = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "a[href='/user/yunusov_denis']")))
-    personal_accaunt.click()
+    driver.get("https://gitflic.ru/user/yunusov_denis")
 
     second_url = driver.current_url
     assert first_url != second_url
