@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def test_calc():
+def success_purchase():
     driver = webdriver.Firefox()
     wait = WebDriverWait(driver, 10)
     driver.maximize_window()
