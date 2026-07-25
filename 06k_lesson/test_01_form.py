@@ -70,6 +70,7 @@ def test_alert():
         "address",
         "e-mail",
         "phone",
+        "city",
         "country",
         "job-position",
         "company",
