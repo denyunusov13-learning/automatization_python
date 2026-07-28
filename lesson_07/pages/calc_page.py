@@ -37,7 +37,7 @@ class Calc_Page:
 
     def set_timer(self, field_value):
         time_field = self.wait.until(
-                    EC.element_to_be_clickable(*self.WAIT_TIMER_FIELD)
+                    EC.element_to_be_clickable(self.WAIT_TIMER_FIELD)
                 )
         time_field.click()
         time_field.clear()
@@ -50,10 +50,13 @@ class Calc_Page:
             if key not in self.BUTTON_LOCATORS:
                 raise ValueError(f"Неизвестный символ в последовательности: {key}")
             btn = self.wait.until(EC.element_to_be_clickable(
-                *self.BUTTON_LOCATORS[key]))
+                self.BUTTON_LOCATORS[key]))
             btn.click()
+
+    def waiting_fot_the_spinner(self):
+        self.wait.until(EC.invisibility_of_element_located((By.ID, "spinner")))
 
     def get_result(self):
         result = self.wait.until(EC.visibility_of_element_located(
-            *self.RESULT_FIELD))
+            self.RESULT_FIELD))
         return result.text
