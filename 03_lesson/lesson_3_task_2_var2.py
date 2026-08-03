@@ -2,7 +2,6 @@
 # практику переод выполнением упражнений, хотел без подсказок
 from smartphone import Smartphone
 
-
 catalog = []
 
 smart1 = Smartphone("techno", "pova4", "+79998887766")
