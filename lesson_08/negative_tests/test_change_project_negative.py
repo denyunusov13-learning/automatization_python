@@ -41,13 +41,15 @@ def headers(get_api_key):
     }
 
 
-def test_create_project_negative(headers, company_id):
-    url = f"{BASE_URL}/projects"
-    params = {"companyId": company_id}
-    body = {"title": ""}
+def test_change_project(headers, new_project_id=234234234234):
+    """
+    намеренно подставляем несуществующий id
+    """
+    url = f"{BASE_URL}/projects/{new_project_id}"
+    body = {"title": "modified in test title"}
 
-    resp = requests.post(url, headers=headers, params=params, json=body)
+    resp = requests.put(url, headers=headers, json=body)
 
-    assert resp.status_code in (400, 422), f"Ожидалась ошибка валидации, получил {resp.status_code}"
+    assert resp.status_code == 404, f"Ожидалась ошибка 404, получил {resp.status_code}"
     error_body = resp.json()
     assert "message" in error_body or "error" in error_body

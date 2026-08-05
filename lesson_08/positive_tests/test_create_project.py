@@ -20,23 +20,18 @@ def company_id():
 
 
 @pytest.fixture
-def get_api_key(company_id):
+def get_api_key():
     """
     Шаг 2: получаем API-ключ через логин/пароль
+    (я его позже убрал, так как тесты начали падать
+    с ошибкой 403... не понимал что происходит и тут,
+    прочитав документацию увидел, что максимум ключей -30,
+    а я создаю их каждый раз, поэтому использую статический)
     """
-    login = os.getenv("YOUGILE_LOGIN")
-    password = os.getenv("YOUGILE_PASSWORD")
-
-    body = {
-        "login": login,
-        "password": password,
-        "companyId": company_id
-    }
-
-    resp = requests.post(f"{BASE_URL}/auth/keys", json=body)
-    resp.raise_for_status()
-    key_api = resp.json().get("key")
-    return key_api
+    key = os.getenv("YOUGILE_API_KEY")
+    if not key:
+        pytest.fail("Не задан YOUGILE_API_KEY в .env! Создай ключ")
+    return key
 
 
 @pytest.fixture

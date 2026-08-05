@@ -41,13 +41,27 @@ def headers(get_api_key):
     }
 
 
-def test_create_project_negative(headers, company_id):
-    url = f"{BASE_URL}/projects"
-    params = {"companyId": company_id}
-    body = {"title": ""}
+@pytest.fixture
+def new_project_id(headers):
+    """
+    Шаг 4: получаем и сохраняем в поле последнее id
+    """
+    resp = requests.get(f"{BASE_URL}/projects", headers=headers)
+    resp.raise_for_status()
+    new_comp_id = resp.json()["content"][-1]["id"]
+    return new_comp_id
 
-    resp = requests.post(url, headers=headers, params=params, json=body)
 
-    assert resp.status_code in (400, 422), f"Ожидалась ошибка валидации, получил {resp.status_code}"
-    error_body = resp.json()
-    assert "message" in error_body or "error" in error_body
+def test_change_project(headers, new_project_id):
+    url = f"{BASE_URL}/projects/{new_project_id}"
+    body = {"title": "modified in test title"}
+
+    resp = requests.put(url, headers=headers, json=body)
+    assert resp.status_code == 200, f"Ожидался 200, получил {resp.status_code}"
+
+    get_resp = requests.get(url, headers=headers)
+    get_resp.raise_for_status()
+    changed_project = get_resp.json()
+
+    assert changed_project["title"] == "modified in test title", f"Заголовок не обновился: {changed_project.get('title')}"
+    assert "id" in changed_project
