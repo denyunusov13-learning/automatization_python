@@ -4,7 +4,6 @@ import pytest
 BASE_URL = "https://ru.yougile.com/api-v2"
 
 
-
 def test_get_project(headers, new_project_id=234234234234):
     """
     намеренно подставляем несуществующий id
