@@ -6,17 +6,17 @@ def test_dynamic_loading():
     driver.maximize_window()
     driver.get("https://gitflic.ru/")
 
-    driver.add_cookie({
-        "name": "SESSION",
-        "value": "YTEyOTY3NDYtZGJkYy00NWY0LWEzMjAtYmY1MDFjYjY2OTJm",
-        "domain": "gitflic.ru"
-    })
+    driver.add_cookie(
+        {
+            "name": "SESSION",
+            "value": "YTEyOTY3NDYtZGJkYy00NWY0LWEzMjAtYmY1MDFjYjY2OTJm",
+            "domain": "gitflic.ru",
+        }
+    )
 
-    driver.add_cookie({
-        "name": "cookiesAccepted",
-        "value": "true",
-        "domain": "gitflic.ru"
-    })
+    driver.add_cookie(
+        {"name": "cookiesAccepted", "value": "true", "domain": "gitflic.ru"}
+    )
 
     driver.refresh()
 
@@ -27,17 +27,17 @@ def test_dynamic_loading():
     driver.delete_all_cookies()
     driver.refresh()
 
-    driver.add_cookie({
-        "name": "SESSION",
-        "value": "ZDljMWVjMzQtNzQ5Ny00MjEzLWEwZjctOWU4ZGYyMjhjOTMw",
-        "domain": "gitflic.ru"
-    })
+    driver.add_cookie(
+        {
+            "name": "SESSION",
+            "value": "ZDljMWVjMzQtNzQ5Ny00MjEzLWEwZjctOWU4ZGYyMjhjOTMw",
+            "domain": "gitflic.ru",
+        }
+    )
 
-    driver.add_cookie({
-        "name": "cookiesAccepted",
-        "value": "true",
-        "domain": "gitflic.ru"
-    })
+    driver.add_cookie(
+        {"name": "cookiesAccepted", "value": "true", "domain": "gitflic.ru"}
+    )
 
     driver.refresh()
 

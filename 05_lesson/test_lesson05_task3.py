@@ -13,8 +13,9 @@ def test_lesson05_task3():
     html_form = driver.find_elements(By.TAG_NAME, "a")
     assert len(html_form) == 9
 
-    list_html_form = [element for element in html_form
-                      if element.is_displayed()]
+    list_html_form = [
+        element for element in html_form if element.is_displayed()
+    ]
     assert len(list_html_form) == 9
     assert "1" in list_html_form[0].text
 

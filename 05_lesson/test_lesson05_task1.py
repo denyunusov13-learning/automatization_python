@@ -9,7 +9,7 @@ def test_lesson05_task1():
     driver.maximize_window()
     first_url = driver.current_url
 
-    time.sleep(10)
+    time.sleep(8)
 
     html_form_button = driver.find_element(By.LINK_TEXT, "HTML form")
     html_form_button.click()
