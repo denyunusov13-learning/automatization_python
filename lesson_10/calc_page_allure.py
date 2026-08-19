@@ -1,0 +1,92 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import allure
+
+
+class Calc_Page:
+
+    WAIT_TIMER_FIELD = (By.ID, "delay")
+    BUTTON_LOCATORS = {
+        "1": (By.XPATH, "//span[text()='1']"),
+        "2": (By.XPATH, "//span[text()='2']"),
+        "3": (By.XPATH, "//span[text()='3']"),
+        "4": (By.XPATH, "//span[text()='4']"),
+        "5": (By.XPATH, "//span[text()='5']"),
+        "6": (By.XPATH, "//span[text()='6']"),
+        "7": (By.XPATH, "//span[text()='7']"),
+        "8": (By.XPATH, "//span[text()='8']"),
+        "9": (By.XPATH, "//span[text()='9']"),
+        "0": (By.XPATH, "//span[text()='0']"),
+        "c": (By.XPATH, "//span[text()='C']"),
+        ".": (By.XPATH, "//span[text()='.']"),
+        "+": (By.XPATH, "//span[text()='+']"),
+        "-": (By.XPATH, "//span[text()='-']"),
+        "/": (By.XPATH, "//span[text()='÷']"),
+        "x": (By.XPATH, "//span[text()='x']"),
+        "=": (By.XPATH, "//span[text()='=']"),
+    }
+    RESULT_FIELD = (By.CSS_SELECTOR, ".screen")
+
+    def __init__(self, driver):
+        """
+        Конструктор класса Calc_Page.
+
+        :param driver: WebDriver — объект драйвера Selenium.
+        """
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    @allure.step("открытие страницы калькулятора")
+    def open(self):
+        """
+        Открывает страницу калькулятора.
+        """
+        self.driver.get(
+                "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
+
+    @allure.step("установка задержки результата на {field_value} секунд")
+    def set_timer(self, field_value):
+        """
+        Устанавливает задержку для выполнения операций на калькуляторе.
+
+        :param field_value: int — время задержки в секундах.
+        """
+        time_field = self.wait.until(
+                    EC.element_to_be_clickable(self.WAIT_TIMER_FIELD)
+                )
+        time_field.click()
+        time_field.clear()
+        time_field.send_keys(field_value)
+
+    @allure.step("Нажатие последовательности кнопок '{sequence}'")
+    def click_button(self, sequence):
+        """Нажимает кнопки по очереди, как передано в sequence
+        (список символов, например ['7', '+', '8', '=']
+
+        :param sequence: list - кнопки, через запятую
+        """
+        for key in sequence:
+            if key not in self.BUTTON_LOCATORS:
+                raise ValueError(f"Неизвестный символ в послед-ти{key}")
+            btn = self.wait.until(EC.element_to_be_clickable(
+                self.BUTTON_LOCATORS[key]))
+            btn.click()
+
+    @allure.step("Ожидание исчезновения индикатора загрузки")
+    def waiting_fot_the_spinner(self):
+        """
+        ожидание скрытия спинера
+        """
+        self.wait.until(EC.invisibility_of_element_located((By.ID, "spinner")))
+
+    @allure.step("получение результата с экрана калькулятора")
+    def get_result(self):
+        """
+        Возвращает текущий результат с экрана калькулятора.
+
+        :return: str — текст результата на экране калькулятора.
+        """
+        result = self.wait.until(EC.visibility_of_element_located(
+            self.RESULT_FIELD))
+        return result.text
